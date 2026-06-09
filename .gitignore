@@ -1,0 +1,34 @@
+# v0 runtime files
+__v0_runtime_loader.js
+__v0_devtools.tsx
+__v0_jsx-dev-runtime.ts
+
+# Network captures (may contain auth tokens / cookies)
+*.har
+
+# Common ignores
+node_modules/
+.next/
+.env*.local
+.DS_Store
+*.pdf
+*.log
+*.txt
+build-plain.log
+build.log
+build_log.txt
+cf-build.txt
+ts-errors.txt
+vercel-build.txt
+.claude
+dist
+out
+# Firebase service account key (NEVER commit)
+serviceAccount.json
+*firebase-adminsdk*.json
+
+# Cloudflare / OpenNext build artifacts — these INLINE secrets (JWT_SECRET, API keys)
+# into bundles, so they must never be committed.
+.open-next/
+.wrangler/
+.dev.vars

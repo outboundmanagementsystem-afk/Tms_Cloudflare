@@ -1,0 +1,121 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function getUserRole() {
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        ? get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role
+        : 'none';
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (getUserRole() in ['admin', 'owner'] || request.auth.token.email == 'ahamedshafeek12345@gmail.com');
+    }
+
+    function isSalesTeam() {
+      return isSignedIn() && (getUserRole() in ['admin', 'owner', 'sales_lead', 'sales'] || request.auth.token.email == 'ahamedshafeek12345@gmail.com');
+    }
+
+    function isOpsTeam() {
+      return isSignedIn() && getUserRole() in ['admin', 'owner', 'ops_lead', 'ops', 'pre_ops', 'pre_ops_lead', 'post_ops_lead', 'post_ops'];
+    }
+
+    function isFinanceTeam() {
+      return isSignedIn() && getUserRole() in ['admin', 'owner', 'finance', 'finance_lead'];
+    }
+
+    function isAnyRole() {
+      return isSignedIn() && (getUserRole() in ['admin', 'owner', 'sales_lead', 'sales', 'ops_lead', 'ops', 'pre_ops', 'pre_ops_lead', 'post_ops_lead', 'post_ops', 'finance', 'finance_lead'] || request.auth.token.email == 'ahamedshafeek12345@gmail.com');
+    }
+
+    // ─── Users Collection ───────────────────────────────
+    match /users/{userId} {
+      // Only allow read by the user themselves or admin
+      allow read: if request.auth.uid == userId || 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'owner'];
+      
+      // Only admin can create or update user documents — users cannot create themselves
+      allow create, update, delete: if 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'owner'];
+    }
+
+    // rest of rules stay exactly the same...
+    match /destinations/{destId} {
+      allow read: if isAnyRole();
+      allow create, update, delete: if isAdmin();
+      match /{subCollection}/{docId} {
+        allow read: if isAnyRole();
+        allow create, update, delete: if isAdmin();
+      }
+    }
+
+    match /packages/{pkgId} {
+      allow read: if isAnyRole();
+      allow create, update: if isAdmin() || isSalesTeam();
+      allow delete: if isAdmin();
+
+      match /{subCollection}/{docId} {
+        allow read: if isAnyRole();
+        allow create, update: if isAdmin() || isSalesTeam();
+        allow delete: if isAdmin();
+      }
+    }
+
+    match /itineraries/{itinId} {
+      allow read: if true;
+      allow create: if isSalesTeam();
+      allow update: if isAnyRole();
+      allow delete: if isAdmin();
+
+      match /payments/{paymentId} {
+        allow read: if isFinanceTeam() || isSalesTeam();
+        allow create, update: if isFinanceTeam() || isSalesTeam();
+        allow delete: if isAdmin();
+      }
+
+      match /{subCollection}/{docId} {
+        allow read: if true;
+        allow create, update: if isSalesTeam() || isOpsTeam() || isFinanceTeam();
+        allow delete: if isAdmin() || isSalesTeam() || isOpsTeam();
+      }
+    }
+
+    match /customers/{customerId} {
+      allow read: if isAnyRole();
+      allow create, update: if isSalesTeam() || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    match /drafts/{draftId} {
+      allow read: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    match /sops/{sopId} {
+      allow read: if isAnyRole();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /sopChecklists/{checkId} {
+      allow read, write: if isAnyRole();
+    }
+
+    match /settings/{settingId} {
+      allow read: if isAnyRole();
+      allow write: if isAdmin();
+    }
+
+    match /accessTokens/{tokenId} {
+      allow read: if isAnyRole();
+      allow create: if isAnyRole();
+      allow update: if isAnyRole();
+      allow delete: if isAdmin();
+    }
+  }
+}

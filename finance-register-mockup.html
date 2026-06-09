@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Outbound Travelers — Finance Register (Mockup)</title>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --primary:#0F8A5F; --primary-600:#0C7350; --primary-700:#095C40; --primary-tint:#ECF6F1; --primary-tint-2:#DCEEE5;
+  --sb-bg:#0C1712; --sb-bg-2:#0A130E; --sb-border:#1C2A22; --sb-text:#9DB1A6; --sb-text-dim:#647A6F; --sb-text-hi:#EAF2EC; --sb-group:#56695E; --sb-active-bg:#16A06A; --sb-hover-bg:#14241B;
+  --green:#15803D; --green-bg:#E7F4EC; --amber:#B45309; --amber-bg:#FBEFDD; --red:#C81E1E; --red-bg:#FBEAEA; --blue:#1D4ED8; --blue-bg:#E8EEFB;
+  --stage-sales:#6D28D9; --stage-sales-bg:#F1ECFB; --stage-preops:#0E7490; --stage-preops-bg:#E4F4F8; --stage-postops:#B45309; --stage-postops-bg:#FBEFDD;
+  --bg:#F5F7F5; --surface:#FFFFFF; --surface-2:#FAFBFA; --border:#E7EBE8; --border-2:#DDE3DF; --border-strong:#CFD7D2;
+  --fg1:#16201B; --fg2:#5A6862; --fg3:#8A968F;
+  --r-sm:9px; --r:13px; --r-lg:18px; --r-pill:999px;
+  --sh-sm:0 1px 2px rgba(16,40,28,.05),0 1px 1px rgba(16,40,28,.04);
+  --sh:0 1px 3px rgba(16,40,28,.06),0 6px 16px -8px rgba(16,40,28,.10);
+  --manual:#FFFBEB; --manual-border:#FCE9B8; --derived:#F4F8F5;
+  --font:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--font);background:var(--bg);color:var(--fg1);-webkit-font-smoothing:antialiased;}
+.tnum{font-variant-numeric:tabular-nums;}
+button{font-family:inherit;cursor:pointer;}
+input,select{font-family:inherit;}
+::-webkit-scrollbar{width:11px;height:11px;}
+::-webkit-scrollbar-thumb{background:#cdd6d0;border-radius:99px;border:3px solid transparent;background-clip:padding-box;}
+
+.app{display:flex;min-height:100vh;}
+.app-main{flex:1;min-width:0;display:flex;flex-direction:column;max-height:100vh;overflow:hidden;}
+.scroll-area{flex:1;overflow-y:auto;}
+.page{padding:26px 32px 64px;max-width:1600px;margin:0 auto;}
+
+/* sidebar */
+.sidebar{width:264px;flex-shrink:0;background:linear-gradient(178deg,var(--sb-bg),var(--sb-bg-2));color:var(--sb-text);display:flex;flex-direction:column;height:100vh;position:sticky;top:0;border-right:1px solid var(--sb-border);}
+.sb-brand{display:flex;align-items:center;gap:11px;padding:20px 20px 16px;}
+.sb-logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(150deg,#1bb277,#0c6f4c);display:grid;place-items:center;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.18);}
+.sb-brand-name{font-size:16px;font-weight:800;color:var(--sb-text-hi);}
+.sb-brand-name .lt{font-weight:500;color:#b6c8bd;}
+.sb-brand-sub{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--sb-text-dim);margin-top:3px;}
+.sb-role{margin:2px 16px 8px;padding:9px 12px;border-radius:var(--r-sm);background:rgba(255,255,255,.035);border:1px solid var(--sb-border);display:flex;align-items:center;gap:9px;font-size:12px;font-weight:600;}
+.sb-role i{color:#46c08a;width:15px;height:15px;}
+.sb-nav{flex:1;overflow-y:auto;padding:6px 12px 14px;}
+.sb-group-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sb-group);padding:16px 10px 7px;}
+.sb-item{display:flex;align-items:center;gap:11px;width:100%;padding:9px 11px;margin:1px 0;border:none;background:transparent;color:var(--sb-text);font-size:13.5px;font-weight:600;border-radius:10px;text-align:left;}
+.sb-item i{width:18px;height:18px;color:var(--sb-text-dim);}
+.sb-item:hover{background:var(--sb-hover-bg);color:var(--sb-text-hi);}
+.sb-item.active{background:var(--sb-active-bg);color:#fff;box-shadow:0 6px 16px -8px rgba(22,160,106,.9);}
+.sb-item.active i{color:#fff;}
+.sb-user{border-top:1px solid var(--sb-border);padding:13px 16px;display:flex;align-items:center;gap:11px;}
+.sb-avatar{width:36px;height:36px;border-radius:10px;background:linear-gradient(150deg,#2c4a3c,#16271f);border:1px solid #2a3e34;display:grid;place-items:center;font-size:13px;font-weight:700;color:#cfe7d9;}
+.sb-user-name{font-size:13px;font-weight:700;color:var(--sb-text-hi);}
+.sb-user-mail{font-size:11px;color:var(--sb-text-dim);}
+
+/* topbar */
+.topbar{height:60px;flex-shrink:0;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:0 24px;}
+.crumbs{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--fg3);font-weight:600;}
+.crumbs .cur{color:var(--fg1);}
+.spacer{flex:1;}
+.search{display:flex;align-items:center;gap:9px;background:var(--surface);border:1px solid var(--border-2);border-radius:var(--r-pill);padding:0 14px;height:38px;}
+.search i{color:var(--fg3);width:16px;height:16px;}
+.search input{border:none;outline:none;background:transparent;font-size:14px;color:var(--fg1);width:230px;}
+.icon-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--surface);display:grid;place-items:center;color:var(--fg2);}
+
+/* page header */
+.page-head{display:flex;align-items:flex-start;gap:18px;margin-bottom:20px;}
+.page-head .grow{flex:1;}
+.page-title{font-size:26px;font-weight:800;letter-spacing:-.025em;margin:0;}
+.page-sub{font-size:14px;color:var(--fg2);margin:6px 0 0;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 16px;border-radius:10px;border:1px solid transparent;font-size:13.5px;font-weight:700;}
+.btn i{width:17px;height:17px;}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 6px 16px -8px rgba(15,138,95,.85);}
+.btn-primary:hover{background:var(--primary-600);}
+.btn-ghost{background:var(--surface);color:var(--fg1);border-color:var(--border-2);}
+.btn-ghost:hover{background:var(--surface-2);}
+
+/* main tabs */
+.tabs{display:flex;gap:6px;background:#ECEFEC;padding:4px;border-radius:var(--r-pill);width:fit-content;margin-bottom:18px;}
+.tab{border:none;background:transparent;color:var(--fg2);font-size:13.5px;font-weight:700;padding:8px 18px;border-radius:var(--r-pill);display:inline-flex;align-items:center;gap:7px;}
+.tab i{width:15px;height:15px;}
+.tab.active{background:var(--surface);color:var(--fg1);box-shadow:var(--sh-sm);}
+
+/* toolbar */
+.toolbar{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;}
+.chips{display:inline-flex;gap:6px;background:#ECEFEC;padding:4px;border-radius:var(--r-pill);}
+.chip{border:none;background:transparent;color:var(--fg2);font-size:12.5px;font-weight:700;padding:6px 13px;border-radius:var(--r-pill);display:inline-flex;align-items:center;gap:6px;}
+.chip .ct{font-size:11px;color:var(--fg3);}
+.chip.active{background:var(--surface);color:var(--fg1);box-shadow:var(--sh-sm);}
+.chip.active .ct{color:var(--primary);}
+.sel{height:38px;border-radius:10px;border:1px solid var(--border-2);background:var(--surface);padding:0 12px;font-size:13px;color:var(--fg1);font-weight:600;}
+
+/* metric cards */
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;box-shadow:var(--sh-sm);position:relative;overflow:hidden;}
+.metric::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent,var(--primary));}
+.metric-top{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.metric-ico{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:var(--accent-bg,var(--primary-tint));color:var(--accent,var(--primary));}
+.metric-ico i{width:18px;height:18px;}
+.metric-label{font-size:12px;font-weight:600;color:var(--fg2);}
+.metric-value{font-size:24px;font-weight:800;letter-spacing:-.03em;}
+.metric-foot{font-size:11.5px;color:var(--fg3);margin-top:8px;}
+
+/* card + table */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden;}
+.table-wrap{width:100%;overflow:auto;max-height:62vh;}
+table.tbl{width:100%;border-collapse:collapse;}
+.tbl thead th{position:sticky;top:0;z-index:2;text-align:left;font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--fg3);padding:11px 12px;background:var(--surface-2);border-bottom:1px solid var(--border);white-space:nowrap;}
+.tbl thead th.num{text-align:right;}
+.tbl tbody td{padding:7px 12px;border-bottom:1px solid var(--border);font-size:13px;color:var(--fg1);white-space:nowrap;}
+.tbl tbody td.num{text-align:right;}
+.tbl tbody tr:hover{background:var(--primary-tint);}
+.tbl tfoot td{position:sticky;bottom:0;background:#F1F5F2;font-weight:800;font-size:13px;padding:11px 12px;border-top:2px solid var(--border-2);white-space:nowrap;}
+.tbl tfoot td.num{text-align:right;}
+.cell-primary{font-weight:700;}
+.cell-sub{font-size:11px;color:var(--fg3);}
+
+/* cells: auto / derived / manual */
+td.derived{background:var(--derived);color:var(--fg2);font-weight:600;}
+td.manual{background:var(--manual);padding:3px 6px;}
+td.manual input,td.manual select{width:100%;min-width:64px;border:1px solid var(--manual-border);background:#fff;border-radius:7px;height:30px;padding:0 7px;font-size:12.5px;color:var(--fg1);outline:none;}
+td.manual input:focus,td.manual select:focus{border-color:var(--primary);box-shadow:0 0 0 2px var(--primary-tint);}
+td.manual input.rem{min-width:120px;}
+
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:var(--r-pill);text-transform:uppercase;border:1px solid transparent;}
+.pill .dot{width:6px;height:6px;border-radius:99px;background:currentColor;}
+.pill-paid{color:var(--green);background:var(--green-bg);}
+.pill-partial{color:var(--amber);background:var(--amber-bg);}
+.pill-unpaid{color:var(--red);background:var(--red-bg);}
+.amount-red{color:var(--red);font-weight:700;}
+.amount-green{color:var(--green);font-weight:700;}
+
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin:6px 0 14px;font-size:12px;color:var(--fg2);font-weight:600;}
+.legend span{display:inline-flex;align-items:center;gap:7px;}
+.sw{width:14px;height:14px;border-radius:4px;border:1px solid var(--border-2);}
+.sw.auto{background:#fff;}
+.sw.derived{background:var(--derived);}
+.sw.manual{background:var(--manual);border-color:var(--manual-border);}
+
+.hint{background:var(--blue-bg);border:1px solid #cfe0fb;border-radius:var(--r);padding:12px 14px;font-size:13px;color:#1e40af;margin-bottom:16px;display:flex;gap:9px;align-items:flex-start;}
+.hint i{width:17px;height:17px;flex-shrink:0;margin-top:1px;}
+
+/* fixed-problems strip */
+.fixes{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;}
+.fix{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;box-shadow:var(--sh-sm);}
+.fix .bad{font-size:12px;color:var(--red);font-weight:700;display:flex;align-items:center;gap:6px;}
+.fix .bad i{width:14px;height:14px;}
+.fix .good{font-size:12.5px;color:var(--fg2);margin-top:5px;display:flex;align-items:flex-start;gap:6px;}
+.fix .good i{width:14px;height:14px;color:var(--green);flex-shrink:0;margin-top:2px;}
+
+/* phase cards */
+.ph-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.phase-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:22px;box-shadow:var(--sh-sm);position:relative;display:flex;flex-direction:column;}
+.phase-card.rec{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-tint);}
+.ph-tag{position:absolute;top:-11px;left:22px;background:var(--primary);color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:99px;}
+.ph-num{width:40px;height:40px;border-radius:12px;background:var(--primary-tint);color:var(--primary-700);display:grid;place-items:center;font-weight:800;font-size:16px;margin-bottom:14px;}
+.phase-card h3{font-size:18px;font-weight:800;margin:0 0 4px;}
+.phase-card .ph-when{font-size:12.5px;color:var(--fg2);font-weight:600;margin-bottom:14px;}
+.ph-feat{list-style:none;padding:0;margin:0 0 18px;flex:1;}
+.ph-feat li{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:var(--fg1);padding:7px 0;border-bottom:1px solid var(--border);}
+.ph-feat li:last-child{border-bottom:none;}
+.ph-feat li i{width:16px;height:16px;color:var(--primary);flex-shrink:0;margin-top:2px;}
+
+/* entry drawer */
+.scrim{position:fixed;inset:0;background:rgba(12,23,18,.42);backdrop-filter:blur(2px);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.edrawer{position:fixed;top:0;right:0;bottom:0;width:540px;max-width:96vw;background:var(--bg);z-index:61;box-shadow:0 24px 60px -20px rgba(10,30,20,.34);transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
+.edrawer.open{transform:translateX(0);}
+.ed-head{padding:18px 22px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px;}
+.ed-title{font-size:19px;font-weight:800;}
+.ed-sub{font-size:13px;color:var(--fg2);margin-top:3px;}
+.ed-close{margin-left:auto;width:36px;height:36px;border-radius:10px;border:1px solid var(--border);background:var(--surface);display:grid;place-items:center;color:var(--fg2);flex-shrink:0;}
+.ed-body{flex:1;overflow-y:auto;padding:18px 22px 28px;}
+.ed-sec{font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--fg3);margin:20px 0 10px;display:flex;align-items:center;gap:7px;}
+.ed-sec:first-child{margin-top:0;}
+.ed-sec i{width:15px;height:15px;color:var(--primary);}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.kv>div{background:var(--surface);padding:10px 13px;}
+.kv .k{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--fg3);font-weight:700;}
+.kv .v{font-size:14px;font-weight:700;margin-top:3px;}
+.efield{margin-bottom:12px;}
+.efield label{display:block;font-size:12px;font-weight:700;color:var(--fg2);margin-bottom:6px;}
+.efield input,.efield select{width:100%;height:40px;border:1px solid var(--border-2);border-radius:10px;padding:0 12px;font-size:14px;background:#fff;outline:none;}
+.efield input:focus,.efield select:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-tint);}
+.erow{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.calc-box{background:var(--primary-tint);border:1px solid var(--primary-tint-2);border-radius:var(--r);padding:14px;}
+.calc-row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;color:var(--fg2);}
+.calc-row .cv{font-weight:700;color:var(--fg1);}
+.calc-row.big{border-top:1px solid var(--primary-tint-2);margin-top:6px;padding-top:10px;font-size:15px;font-weight:800;color:var(--primary-700);}
+.calc-row.big .cv{color:var(--primary-700);}
+.cust-link{cursor:pointer;color:var(--primary-700);}
+.cust-link:hover{text-decoration:underline;}
+
+/* analytics */
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh-sm);padding:18px 20px;}
+.panel-title{font-size:15px;font-weight:800;margin:0;display:flex;align-items:center;gap:8px;}
+.panel-title i{width:17px;height:17px;color:var(--primary);}
+.panel-sub{font-size:12px;color:var(--fg3);margin:3px 0 14px;}
+.an-grid2{display:grid;grid-template-columns:1.55fr 1fr;gap:16px;margin-bottom:16px;}
+.an-grid2b{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+@media(max-width:1100px){.an-grid2,.an-grid2b{grid-template-columns:1fr;}}
+.cmp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+@media(max-width:760px){.cmp-grid{grid-template-columns:repeat(2,1fr);}}
+.cmp{border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;background:var(--surface-2);}
+.cmp .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--fg3);font-weight:700;}
+.cmp .v{font-size:20px;font-weight:800;margin-top:6px;letter-spacing:-.02em;}
+.cmp .d{font-size:12px;font-weight:700;margin-top:5px;display:inline-flex;align-items:center;gap:4px;}
+.cmp .d i{width:13px;height:13px;}
+.cmp .d.up{color:var(--green);} .cmp .d.down{color:var(--red);} .cmp .d.flat{color:var(--fg3);}
+.cmp .prev{font-size:11px;color:var(--fg3);margin-top:3px;}
+.pl-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13.5px;}
+.pl-row .lbl{color:var(--fg2);font-weight:600;flex:1;}
+.pl-row .pc{font-size:11px;color:var(--fg3);width:42px;text-align:right;}
+.pl-row .amt{font-weight:700;font-variant-numeric:tabular-nums;width:110px;text-align:right;}
+.pl-row.sub{font-weight:800;color:var(--fg1);background:var(--surface-2);margin:0 -20px;padding:9px 20px;}
+.pl-row.sub .lbl{color:var(--fg1);}
+.pl-row.total{font-size:16px;font-weight:800;color:var(--primary-700);border-bottom:none;padding-top:13px;}
+.pl-row.total .lbl{color:var(--primary-700);}
+.pl-neg .amt{color:var(--red);}
+.forecast{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+.fc{flex:1;min-width:130px;border:1px dashed var(--primary);background:var(--primary-tint);border-radius:var(--r);padding:12px 14px;}
+.fc .l{font-size:10.5px;text-transform:uppercase;color:var(--primary-700);font-weight:700;letter-spacing:.04em;}
+.fc .v{font-size:19px;font-weight:800;color:var(--primary-700);margin-top:5px;}
+.fc .s{font-size:11px;color:var(--fg2);margin-top:3px;}
+.chart-chips{display:inline-flex;gap:6px;margin:2px 0 12px;}
+.chart-chips button{border:1px solid var(--border-2);background:#fff;color:var(--fg2);font-size:12px;font-weight:700;padding:5px 11px;border-radius:99px;}
+.chart-chips button.on{background:var(--primary-tint);border-color:var(--primary);color:var(--primary-700);}
+.mini-table{width:100%;border-collapse:collapse;}
+.mini-table th{font-size:10.5px;text-transform:uppercase;color:var(--fg3);text-align:left;padding:8px 6px;border-bottom:1px solid var(--border);font-weight:700;}
+.mini-table th.num,.mini-table td.num{text-align:right;}
+.mini-table td{padding:8px 6px;font-size:12.5px;border-bottom:1px solid var(--border);white-space:nowrap;}
+.mini-table tr:last-child td{border-bottom:none;}
+.hbar{display:flex;align-items:center;gap:10px;margin:9px 0;}
+.hbar .nm{font-size:12.5px;font-weight:600;width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.hbar .track{flex:1;height:10px;border-radius:99px;background:#EAEFEB;overflow:hidden;}
+.hbar .fill{height:100%;border-radius:99px;background:var(--primary);}
+.hbar .vv{font-size:12px;font-weight:700;width:92px;text-align:right;font-variant-numeric:tabular-nums;}
+.kv2{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13.5px;}
+.kv2:last-child{border-bottom:none;}
+.kv2 .k{color:var(--fg2);font-weight:600;display:flex;align-items:center;gap:8px;}
+.kv2 .k i{width:15px;height:15px;color:var(--fg3);}
+.kv2 .v{font-weight:800;font-variant-numeric:tabular-nums;}
+.legend-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--fg2);justify-content:center;}
+.legend-row span{display:inline-flex;align-items:center;gap:6px;}
+.legend-row .sw2{width:11px;height:11px;border-radius:3px;}
+.hidden{display:none;}
+@media(max-width:1100px){.metric-grid{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo"><i data-lucide="globe"></i></div>
+      <div><div class="sb-brand-name">Outbound<span class="lt"> Travelers</span></div><div class="sb-brand-sub">Travel Management</div></div>
+    </div>
+    <div class="sb-role"><i data-lucide="shield-check"></i> Administrator</div>
+    <nav class="sb-nav">
+      <button class="sb-item"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></button>
+      <button class="sb-item"><i data-lucide="chart-no-axes-combined"></i><span>KPI Analytics</span></button>
+      <button class="sb-item"><i data-lucide="git-branch"></i><span>Pipeline</span></button>
+      <button class="sb-item"><i data-lucide="users"></i><span>Users</span></button>
+      <button class="sb-item"><i data-lucide="contact-round"></i><span>Customers</span></button>
+      <button class="sb-item"><i data-lucide="map-pin"></i><span>Destinations</span></button>
+      <div class="sb-group-label">Finance</div>
+      <button class="sb-item"><i data-lucide="wallet"></i><span>Finance Dashboard</span></button>
+      <button class="sb-item"><i data-lucide="hand-coins"></i><span>Payments</span></button>
+      <button class="sb-item"><i data-lucide="receipt-text"></i><span>Invoices</span></button>
+      <button class="sb-item active"><i data-lucide="table-2"></i><span>Finance Register</span></button>
+    </nav>
+    <div class="sb-user">
+      <div class="sb-avatar">RK</div>
+      <div><div class="sb-user-name">Rahul Khanna</div><div class="sb-user-mail">rahul.khanna@outbound…</div></div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="app-main">
+    <header class="topbar">
+      <div class="crumbs">Finance <span>›</span> <span class="cur">Finance Register</span></div>
+      <div class="spacer"></div>
+      <div class="search"><i data-lucide="search"></i><input id="topSearch" placeholder="Search customer, rep, invoice…" /></div>
+      <button class="icon-btn"><i data-lucide="bell"></i></button>
+    </header>
+
+    <div class="scroll-area">
+      <div class="page">
+        <div class="page-head">
+          <div class="grow">
+            <h1 class="page-title">Finance Register</h1>
+            <p class="page-sub">Every booking, auto-filled from the TMS. Finance only fills the highlighted fields — everything else calculates itself.</p>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn btn-ghost" onclick="exportCSV()"><i data-lucide="download"></i>Export Excel/CSV</button>
+            <button class="btn btn-ghost" onclick="openAdd()"><i data-lucide="plus"></i>Add Booking</button>
+            <button class="btn btn-primary"><i data-lucide="refresh-cw"></i>Sync from TMS</button>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab active" id="tab-reg" onclick="showView('register')"><i data-lucide="table-2"></i>Register</button>
+          <button class="tab" id="tab-rep" onclick="showView('reports')"><i data-lucide="chart-pie"></i>Reports</button>
+          <button class="tab" id="tab-an" onclick="showView('analytics')"><i data-lucide="trending-up"></i>P&amp;L &amp; Analytics</button>
+          <button class="tab" id="tab-roll" onclick="showView('rollout')"><i data-lucide="rocket"></i>Rollout Plan</button>
+        </div>
+
+        <!-- ============ REGISTER VIEW ============ -->
+        <div id="view-register">
+          <div class="hint"><i data-lucide="sparkles"></i>
+            <div><b>How this replaces Excel:</b> 23 of 32 columns come straight from your bookings or calculate automatically. Finance types only the 9 amber fields. Click a customer name to open the simple <b>entry card</b>, or edit inline — totals update live. No formulas to maintain, no errors.</div>
+          </div>
+
+          <div class="fixes">
+            <div class="fix"><div class="bad"><i data-lucide="circle-x"></i>#DIV/0! errors</div><div class="good"><i data-lucide="check"></i>Adv % is guarded — shows 0% when there's no total, never an error.</div></div>
+            <div class="fix"><div class="bad"><i data-lucide="circle-x"></i>Hundreds of blank rows</div><div class="good"><i data-lucide="check"></i>Only real bookings show. New ones arrive automatically from the TMS.</div></div>
+            <div class="fix"><div class="bad"><i data-lucide="circle-x"></i>Manual dropdowns on every cell</div><div class="good"><i data-lucide="check"></i>Status, rep, dates, destination, amounts all auto-fill from the booking.</div></div>
+            <div class="fix"><div class="bad"><i data-lucide="circle-x"></i>Broken / copied formulas</div><div class="good"><i data-lucide="check"></i>GST, balance, revenue computed in code — consistent on every row.</div></div>
+          </div>
+
+          <div class="toolbar">
+            <div class="chips" id="statusChips"></div>
+            <select class="sel" id="monthFilter"></select>
+            <select class="sel" id="repFilter"></select>
+            <div class="spacer" style="flex:1"></div>
+            <span style="font-size:12.5px;color:var(--fg2);font-weight:600"><span id="rowCount" class="tnum"></span> bookings</span>
+          </div>
+
+          <div class="legend">
+            <span><i class="sw auto"></i>Auto from TMS</span>
+            <span><i class="sw derived"></i>Auto-calculated</span>
+            <span><i class="sw manual"></i>Finance enters this</span>
+          </div>
+
+          <div class="card">
+            <div class="table-wrap">
+              <table class="tbl" id="regTable">
+                <thead><tr>
+                  <th>Sl</th><th>Status</th><th>Month</th><th>Type</th><th>Entry Date</th><th>GST Inv. No</th>
+                  <th>Team Lead</th><th>Rep</th><th>Customer</th><th>Mobile</th><th>City</th><th class="num">Members</th>
+                  <th>Travel Month</th><th>Check-in</th><th>Check-out</th><th>Destination</th><th>Package</th>
+                  <th class="num">Total Inc GST</th><th class="num">Total Cost</th><th class="num">Received</th><th class="num">Adv %</th><th class="num">Balance</th>
+                  <th class="num">Agent Fees +GST</th><th class="num">Agent Fees</th><th class="num">Amt Paid</th><th class="num">Balance 2</th>
+                  <th class="num">GST @5%</th><th class="num">TCS @2%</th><th class="num">Revenue</th><th class="num">Rev %</th><th class="num">DMC</th><th>Remarks 1</th><th>Remarks 2</th>
+                </tr></thead>
+                <tbody id="regBody"></tbody>
+                <tfoot id="regFoot"></tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ REPORTS VIEW ============ -->
+        <div id="view-reports" class="hidden">
+          <div class="toolbar">
+            <div class="chips" id="reportChips"></div>
+            <div class="spacer" style="flex:1"></div>
+            <button class="btn btn-ghost" onclick="exportReportCSV()"><i data-lucide="download"></i>Export this report</button>
+          </div>
+          <div class="metric-grid" id="repMetrics"></div>
+          <div class="card">
+            <div class="table-wrap" style="max-height:54vh">
+              <table class="tbl" id="repTable">
+                <thead id="repHead"></thead>
+                <tbody id="repBody"></tbody>
+                <tfoot id="repFoot"></tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ ANALYTICS VIEW ============ -->
+        <div id="view-analytics" class="hidden">
+          <div class="metric-grid" id="anKpis"></div>
+          <div class="an-grid2">
+            <div class="panel">
+              <div class="panel-title"><i data-lucide="trending-up"></i>Revenue Trend & Forecast</div>
+              <div class="panel-sub">Last 12 months · dashed bar = next-month prediction</div>
+              <div class="chart-chips" id="anMetricChips"></div>
+              <div id="anChart"></div>
+              <div class="forecast" id="anForecast"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-title"><i data-lucide="scale"></i>Profit &amp; Loss</div>
+              <div class="panel-sub">All bookings · % of net sales</div>
+              <div id="anPL"></div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-bottom:16px">
+            <div class="panel-title"><i data-lucide="calendar-clock"></i>This month vs last month</div>
+            <div class="panel-sub" id="anMomSub"></div>
+            <div class="cmp-grid" id="anMoM"></div>
+          </div>
+          <div class="panel" style="margin-bottom:16px">
+            <div class="panel-title"><i data-lucide="calendar-range"></i>Last 6 months vs prior 6 months</div>
+            <div class="panel-sub" id="anHalfSub"></div>
+            <div class="cmp-grid" id="anHalf"></div>
+          </div>
+
+          <div class="an-grid2b">
+            <div class="panel">
+              <div class="panel-title"><i data-lucide="map-pin"></i>Profit by destination</div>
+              <div class="panel-sub">Where the margin actually comes from</div>
+              <div style="overflow:auto;max-height:300px"><table class="mini-table" id="anDest"></table></div>
+            </div>
+            <div class="panel">
+              <div class="panel-title"><i data-lucide="pie-chart"></i>Revenue by type</div>
+              <div class="panel-sub">Domestic vs International</div>
+              <div id="anType" style="display:flex;flex-direction:column;align-items:center"></div>
+            </div>
+          </div>
+
+          <div class="an-grid2b">
+            <div class="panel">
+              <div class="panel-title"><i data-lucide="award"></i>Top performers (by revenue)</div>
+              <div class="panel-sub">Sales reps ranked on net revenue generated</div>
+              <div id="anReps" style="margin-top:6px"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-title"><i data-lucide="hourglass"></i>Receivables aging</div>
+              <div class="panel-sub">Outstanding balances by how close the trip is</div>
+              <div id="anAging" style="margin-top:6px"></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title"><i data-lucide="wallet"></i>Cash position & liabilities</div>
+            <div class="panel-sub">What's in, what's owed, what's payable to government & suppliers</div>
+            <div class="an-grid2b" style="margin:0"><div id="anCashL"></div><div id="anCashR"></div></div>
+          </div>
+        </div>
+
+        <!-- ============ ROLLOUT VIEW ============ -->
+        <div id="view-rollout" class="hidden">
+          <div class="hint" style="background:var(--primary-tint);border-color:var(--primary-tint-2);color:var(--primary-700);"><i data-lucide="rocket"></i>
+            <div><b>How we'd roll this out.</b> You don't have to switch everything at once. Pick how far you want to go — each phase works on its own and builds on the last. Phase 1 already replaces the spreadsheet.</div>
+          </div>
+          <div class="ph-grid">
+            <div class="phase-card rec">
+              <div class="ph-tag">Recommended start</div>
+              <div class="ph-num">1</div>
+              <h3>Replace the spreadsheet</h3>
+              <div class="ph-when">Use from day one · zero risk · stop using Excel</div>
+              <ul class="ph-feat">
+                <li><i data-lucide="check"></i>Live Finance Register — every booking auto-filled from the TMS</li>
+                <li><i data-lucide="check"></i>Simple entry card — finance fills only 9 fields, math is automatic</li>
+                <li><i data-lucide="check"></i>No #DIV/0!, no blank rows, no broken formulas</li>
+                <li><i data-lucide="check"></i>Search, filter by status / month / rep, live totals</li>
+                <li><i data-lucide="check"></i>Export to Excel/CSV anytime</li>
+              </ul>
+              <button class="btn btn-primary ph-pick" onclick="showView('register')"><i data-lucide="arrow-right"></i>See it now</button>
+            </div>
+            <div class="phase-card">
+              <div class="ph-num">2</div>
+              <h3>Reports &amp; insights</h3>
+              <div class="ph-when">Once data is flowing · for reviews &amp; tax filing</div>
+              <ul class="ph-feat">
+                <li><i data-lucide="check"></i>Monthly / weekly / daily reports, one click</li>
+                <li><i data-lucide="check"></i>Person-wise, team-lead, destination, status &amp; type breakdowns</li>
+                <li><i data-lucide="check"></i>GST @5% &amp; TCS summaries ready for filing</li>
+                <li><i data-lucide="check"></i>Revenue, DMC cost &amp; margin dashboards with charts</li>
+                <li><i data-lucide="check"></i>Period "close the month" snapshot &amp; export</li>
+              </ul>
+              <button class="btn btn-ghost ph-pick" onclick="showView('reports')"><i data-lucide="chart-pie"></i>Preview reports</button>
+            </div>
+            <div class="phase-card">
+              <div class="ph-num">3</div>
+              <h3>Automation &amp; control</h3>
+              <div class="ph-when">When the team is comfortable · scale &amp; governance</div>
+              <ul class="ph-feat">
+                <li><i data-lucide="check"></i>Auto-sync the moment a booking is made or payment logged</li>
+                <li><i data-lucide="check"></i>Overdue-balance &amp; final-payment alerts (Aura nudges)</li>
+                <li><i data-lucide="check"></i>Approval workflow + audit log (who changed what, when)</li>
+                <li><i data-lucide="check"></i>Role locks — revenue/DMC visible to admin only</li>
+                <li><i data-lucide="check"></i>One-click export to Tally / Zoho Books</li>
+              </ul>
+              <button class="btn btn-ghost ph-pick" disabled style="opacity:.55"><i data-lucide="lock"></i>Future phase</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ENTRY DRAWER ============ -->
+<div class="scrim" id="edScrim" onclick="closeEntry()"></div>
+<div class="edrawer" id="edDrawer">
+  <div class="ed-head" id="edHead"></div>
+  <div class="ed-body" id="edBody"></div>
+</div>
+
+<script>
+/* ---------------- Sample data (in the real build these come from Firestore bookings) ---------------- */
+// auto fields come from the TMS booking; manual fields start blank/seeded for the demo.
+const SEED = [
+  {status:"PARTIAL", entry:"2026-05-02", tl:"Arjun Mehta", rep:"Priya Sharma", cust:"Rajesh Kumar", mob:"+91 99001 00001", members:4, dest:"Dubai", pkg:"Dubai Delight", checkin:"2026-06-14", checkout:"2026-06-18", incgst:124000, received:40000,
+    type:"International", inv:"INV-024109-001", city:"Chennai", agentGst:8400, paid:60000, tcs:0, dmc:78000, r1:"Visa in process", r2:""},
+  {status:"PAID", entry:"2026-03-10", tl:"Arjun Mehta", rep:"Rahul Nair", cust:"Ananya Iyer", mob:"+91 99012 88210", members:2, dest:"Bali", pkg:"Bali Honeymoon", checkin:"2026-05-09", checkout:"2026-05-15", incgst:185000, received:185000,
+    type:"International", inv:"INV-024166-002", city:"Mumbai", agentGst:12600, paid:120000, tcs:9250, dmc:120000, r1:"Anniversary trip", r2:"Repeat client"},
+  {status:"PARTIAL", entry:"2026-04-15", tl:"Arjun Mehta", rep:"Sneha Iyer", cust:"Rajesh Kumar", mob:"+91 98330 17765", members:6, dest:"Maldives", pkg:"Maldives Luxe", checkin:"2026-06-22", checkout:"2026-06-27", incgst:342500, received:200000,
+    type:"International", inv:"INV-024142-001", city:"Bengaluru", agentGst:21000, paid:150000, tcs:17125, dmc:225000, r1:"", r2:""},
+  {status:"UNPAID", entry:"2026-05-02", tl:"Arjun Mehta", rep:"Priya Sharma", cust:"Priya Sharma", mob:"+91 90048 33219", members:2, dest:"Switzerland", pkg:"Swiss Alps", checkin:"2026-07-05", checkout:"2026-07-13", incgst:680000, received:0,
+    type:"International", inv:"", city:"Delhi", agentGst:0, paid:0, tcs:0, dmc:440000, r1:"Awaiting advance", r2:""},
+  {status:"PAID", entry:"2026-02-28", tl:"Arjun Mehta", rep:"Rahul Nair", cust:"Fatima Sheikh", mob:"+91 99876 50032", members:4, dest:"Kerala", pkg:"Kerala Backwaters", checkin:"2026-03-20", checkout:"2026-03-25", incgst:88500, received:88500,
+    type:"Domestic", inv:"INV-024088-001", city:"Hyderabad", agentGst:5800, paid:55000, tcs:0, dmc:54000, r1:"", r2:""},
+  {status:"PARTIAL", entry:"2026-05-12", tl:"Arjun Mehta", rep:"Sneha Iyer", cust:"Vikram Reddy", mob:"+91 90030 91187", members:5, dest:"Thailand", pkg:"Thailand Explorer", checkin:"2026-06-28", checkout:"2026-07-04", incgst:215000, received:115000,
+    type:"International", inv:"INV-024061-002", city:"Pune", agentGst:14000, paid:80000, tcs:0, dmc:138000, r1:"Group booking", r2:""},
+  {status:"UNPAID", entry:"2026-05-15", tl:"Arjun Mehta", rep:"Priya Sharma", cust:"Sneha Patel", mob:"+91 98191 22008", members:3, dest:"Singapore", pkg:"Singapore City", checkin:"2026-07-02", checkout:"2026-07-07", incgst:156000, received:0,
+    type:"International", inv:"", city:"Ahmedabad", agentGst:0, paid:0, tcs:0, dmc:101000, r1:"", r2:""},
+  {status:"PAID", entry:"2026-03-24", tl:"Arjun Mehta", rep:"Rahul Nair", cust:"Karan Malhotra", mob:"+91 99100 47781", members:4, dest:"Andaman", pkg:"Andaman Islands", checkin:"2026-05-04", checkout:"2026-05-09", incgst:112500, received:112500,
+    type:"Domestic", inv:"INV-024017-002", city:"Kolkata", agentGst:7500, paid:62500, tcs:0, dmc:70000, r1:"", r2:"Honeymoon"},
+  {status:"PARTIAL", entry:"2026-04-30", tl:"Arjun Mehta", rep:"Sneha Iyer", cust:"Lakshmi Nair", mob:"+91 90087 65510", members:6, dest:"Vietnam", pkg:"Vietnam Discovery", checkin:"2026-06-09", checkout:"2026-06-16", incgst:268000, received:100000,
+    type:"International", inv:"INV-023998-001", city:"Chennai", agentGst:17000, paid:90000, tcs:13400, dmc:172000, r1:"", r2:""},
+  {status:"PARTIAL", entry:"2026-05-20", tl:"Arjun Mehta", rep:"Priya Sharma", cust:"Dummy Test Client", mob:"+91 98201 44512", members:2, dest:"Kashmir", pkg:"Kashmir Valley", checkin:"2026-06-14", checkout:"2026-06-18", incgst:9775, received:3000,
+    type:"Domestic", inv:"INV-024187-001", city:"Coimbatore", agentGst:600, paid:0, tcs:0, dmc:6200, r1:"", r2:""},
+];
+
+const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const fmt=n=>(n===null||n===undefined||isNaN(n))?"—":"₹"+Math.round(n).toLocaleString("en-IN");
+const monthOf=iso=>{const d=new Date(iso);return MONTHS[d.getMonth()]+" "+d.getFullYear();};
+const dmy=iso=>{const d=new Date(iso);return d.getDate()+" "+MONTHS[d.getMonth()]+" "+d.getFullYear();};
+function weekOf(iso){const d=new Date(iso);const onejan=new Date(d.getFullYear(),0,1);const wk=Math.ceil((((d-onejan)/86400000)+onejan.getDay()+1)/7);return "Wk "+wk+", "+d.getFullYear();}
+
+/* ---------------- derive a full row ---------------- */
+function derive(b){
+  const totalCost = b.incgst/1.05;
+  const gst5 = b.incgst - totalCost;
+  const advPct = b.incgst>0 ? Math.round(b.received/b.incgst*100) : 0;
+  const balance = b.incgst - b.received;
+  const agentFees = b.agentGst/1.05;
+  const balance2 = b.agentGst - b.paid;
+  const revenue = totalCost - b.dmc - agentFees; // Revenue = net cost − DMC − agent fees
+  const revBase = totalCost - b.tcs;             // base excludes GST and TCS
+  const revenuePct = revBase>0 ? Math.round(revenue/revBase*100) : 0;
+  return {...b, totalCost, gst5, advPct, balance, agentFees, balance2, revenue, revenuePct};
+}
+/* ---------------- 12-month sample dataset (real build = TMS bookings) ---------------- */
+const CURRENT = new Date("2026-05-29T00:00:00");
+const MONTHS_SEQ = [];
+(function(){let y=2025,m=5;for(let i=0;i<12;i++){MONTHS_SEQ.push({y,m,key:MONTHS[m]+" "+y});m++;if(m>11){m=0;y++;}}})();
+const DESTS=[
+  {d:"Dubai",c:"UAE",t:"International",lo:90000,hi:180000},{d:"Bali",c:"Indonesia",t:"International",lo:120000,hi:240000},
+  {d:"Maldives",c:"Maldives",t:"International",lo:200000,hi:400000},{d:"Thailand",c:"Thailand",t:"International",lo:120000,hi:240000},
+  {d:"Singapore",c:"Singapore",t:"International",lo:120000,hi:220000},{d:"Vietnam",c:"Vietnam",t:"International",lo:140000,hi:300000},
+  {d:"Switzerland",c:"Switzerland",t:"International",lo:400000,hi:760000},{d:"Kerala",c:"India",t:"Domestic",lo:50000,hi:120000},
+  {d:"Kashmir",c:"India",t:"Domestic",lo:40000,hi:120000},{d:"Goa",c:"India",t:"Domestic",lo:40000,hi:90000},
+  {d:"Andaman",c:"India",t:"Domestic",lo:80000,hi:160000},{d:"Manali",c:"India",t:"Domestic",lo:50000,hi:110000},
+];
+const PKG={Dubai:"Dubai Delight",Bali:"Bali Explorer",Maldives:"Maldives Luxe",Thailand:"Thailand Discover",Singapore:"Singapore City",Vietnam:"Vietnam Voyage",Switzerland:"Swiss Alps",Kerala:"Kerala Backwaters",Kashmir:"Kashmir Valley",Goa:"Goa Getaway",Andaman:"Andaman Isles",Manali:"Manali Snow"};
+const REPS=[{r:"Priya Sharma",tl:"Arjun Mehta"},{r:"Rahul Nair",tl:"Arjun Mehta"},{r:"Sneha Iyer",tl:"Arjun Mehta"},{r:"Karan Joshi",tl:"Deepa Menon"},{r:"Anita Rao",tl:"Deepa Menon"}];
+const CITIES=["Chennai","Mumbai","Bengaluru","Delhi","Hyderabad","Pune","Kolkata","Coimbatore","Ahmedabad","Kochi","Jaipur","Lucknow"];
+const CUSTS=["Rajesh Kumar","Meera Banerjee","Sanjay Gupta","Anita Deshmukh","Vivek Reddy","Pooja Joshi","Amir Khan","Lakshmi Narayanan","Rohit Malhotra","Divya Pillai","Suresh Bhat","Kavitha Sundaram","Manish Agarwal","Neha Chauhan","Prakash Shetty","Ritu Saxena","Gaurav Thakur","Swati Kulkarni","Nitin Verma","Farhan Qureshi","Deepak Iyer","Sangeeta Roy","Harish Pillai","Tara Menon"];
+let _s=987654321; const R=()=>{_s=(_s*1664525+1013904223)%4294967296;return _s/4294967296;};
+const ri=(a,b)=>Math.floor(a+R()*(b-a+1)); const pk=a=>a[Math.floor(R()*a.length)];
+function genData(){
+  const COUNTS=[6,7,7,8,9,8,10,11,10,12,13,9]; const out=[];
+  MONTHS_SEQ.forEach((mo,mi)=>{
+    for(let k=0;k<COUNTS[mi];k++){
+      const dest=pk(DESTS), rep=pk(REPS);
+      const incgst=Math.round(ri(dest.lo,dest.hi)/500)*500;
+      const roll=R(); let received;
+      if(roll<0.4) received=incgst; else if(roll<0.78) received=Math.round(incgst*(0.2+R()*0.5)/500)*500; else received=0;
+      const status=received<=0?"UNPAID":received>=incgst?"PAID":"PARTIAL";
+      const totalCost=incgst/1.05;
+      const dmc=Math.round(totalCost*(0.58+R()*0.1)/500)*500;
+      const agentGst=Math.round(incgst*(0.05+R()*0.02)/100)*100;
+      const paid=R()<0.5?agentGst:Math.round(agentGst*R()/100)*100;
+      const tcs=(dest.t==="International")?Math.round((incgst/1.05)*0.02/100)*100:0;
+      const day=ri(1,28), entry=`${mo.y}-${String(mo.m+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+      const ci=new Date(mo.y,mo.m,day); ci.setDate(ci.getDate()+ri(35,80)); const co=new Date(ci); co.setDate(co.getDate()+ri(3,7));
+      const iso=d=>d.toISOString().split("T")[0];
+      out.push({status,entry,tl:rep.tl,rep:rep.r,cust:pk(CUSTS),mob:"+91 9"+ri(100000000,999999999),members:ri(2,7),
+        dest:dest.d,pkg:(PKG[dest.d]||dest.d+" Tour"),checkin:iso(ci),checkout:iso(co),incgst,received,type:dest.t,
+        inv:received>0?("INV-0"+ri(24000,24999)+"-00"+ri(1,3)):"",city:pk(CITIES),agentGst,paid,tcs,dmc,r1:"",r2:""});
+    }
+  });
+  return out;
+}
+let DATA = genData().map(derive);
+
+/* ---------------- filters ---------------- */
+let fStatus="all", fMonth="all", fRep="all", fSearch="";
+function filtered(){
+  return DATA.filter(b=>{
+    if(fStatus!=="all" && b.status!==fStatus) return false;
+    if(fMonth!=="all" && monthOf(b.entry)!==fMonth) return false;
+    if(fRep!=="all" && b.rep!==fRep) return false;
+    if(fSearch){const q=fSearch.toLowerCase();if(!((b.cust+" "+b.rep+" "+b.inv+" "+b.dest+" "+b.mob).toLowerCase().includes(q)))return false;}
+    return true;
+  });
+}
+
+/* ---------------- register render ---------------- */
+function statusPill(s){const c=s==="PAID"?"pill-paid":s==="PARTIAL"?"pill-partial":"pill-unpaid";return `<span class="pill ${c}"><span class="dot"></span>${s}</span>`;}
+function renderRegister(){
+  const rows=filtered();
+  document.getElementById("rowCount").textContent=rows.length;
+  const body=document.getElementById("regBody");
+  body.innerHTML=rows.map((b)=>{
+    const i=DATA.indexOf(b);
+    return `<tr>
+      <td class="derived">${i+1}</td>
+      <td>${statusPill(b.status)}</td>
+      <td class="derived">${monthOf(b.entry)}</td>
+      <td class="manual"><select onchange="setVal(${i},'type',this.value)">
+        ${["Domestic","International"].map(t=>`<option ${b.type===t?"selected":""}>${t}</option>`).join("")}</select></td>
+      <td>${dmy(b.entry)}</td>
+      <td class="manual"><input value="${b.inv||""}" placeholder="INV-…" onchange="setVal(${i},'inv',this.value)"></td>
+      <td>${b.tl}</td>
+      <td class="cell-primary">${b.rep}</td>
+      <td class="cell-primary cust-link" onclick="openEntry(${i})" title="Open finance entry card">${b.cust}</td>
+      <td class="tnum">${b.mob}</td>
+      <td class="manual"><input value="${b.city||""}" placeholder="City" onchange="setVal(${i},'city',this.value)"></td>
+      <td class="num tnum">${b.members}</td>
+      <td>${monthOf(b.checkin)}</td>
+      <td class="tnum">${dmy(b.checkin)}</td>
+      <td class="tnum">${dmy(b.checkout)}</td>
+      <td>${b.dest}</td>
+      <td>${b.pkg}</td>
+      <td class="num tnum amount-strong">${fmt(b.incgst)}</td>
+      <td class="num derived tnum">${fmt(b.totalCost)}</td>
+      <td class="num tnum amount-green">${fmt(b.received)}</td>
+      <td class="num derived tnum">${b.advPct}%</td>
+      <td class="num derived tnum"><span class="${b.balance>0?'amount-red':''}">${fmt(b.balance)}</span></td>
+      <td class="manual"><input type="number" value="${b.agentGst||0}" onchange="setVal(${i},'agentGst',+this.value)"></td>
+      <td class="num derived tnum">${fmt(b.agentFees)}</td>
+      <td class="manual"><input type="number" value="${b.paid||0}" onchange="setVal(${i},'paid',+this.value)"></td>
+      <td class="num derived tnum">${fmt(b.balance2)}</td>
+      <td class="num derived tnum">${fmt(b.gst5)}</td>
+      <td class="manual"><input type="number" value="${b.tcs||0}" onchange="setVal(${i},'tcs',+this.value)"></td>
+      <td class="num derived tnum"><b style="color:var(--primary-700)">${fmt(b.revenue)}</b></td>
+      <td class="num derived tnum"><b style="color:var(--primary-700)">${b.revenuePct}%</b></td>
+      <td class="manual"><input type="number" value="${b.dmc||0}" onchange="setVal(${i},'dmc',+this.value)"></td>
+      <td class="manual"><input class="rem" value="${b.r1||""}" onchange="setVal(${i},'r1',this.value)"></td>
+      <td class="manual"><input class="rem" value="${b.r2||""}" onchange="setVal(${i},'r2',this.value)"></td>
+    </tr>`;
+  }).join("");
+
+  // totals footer
+  const sum=k=>rows.reduce((s,b)=>s+(+b[k]||0),0);
+  document.getElementById("regFoot").innerHTML=`<tr>
+    <td colspan="17">TOTALS · ${rows.length} bookings</td>
+    <td class="num tnum">${fmt(sum('incgst'))}</td>
+    <td class="num tnum">${fmt(sum('totalCost'))}</td>
+    <td class="num tnum">${fmt(sum('received'))}</td>
+    <td></td>
+    <td class="num tnum">${fmt(sum('balance'))}</td>
+    <td class="num tnum">${fmt(sum('agentGst'))}</td>
+    <td class="num tnum">${fmt(sum('agentFees'))}</td>
+    <td class="num tnum">${fmt(sum('paid'))}</td>
+    <td class="num tnum">${fmt(sum('balance2'))}</td>
+    <td class="num tnum">${fmt(sum('gst5'))}</td>
+    <td class="num tnum">${fmt(sum('tcs'))}</td>
+    <td class="num tnum">${fmt(sum('revenue'))}</td>
+    <td class="num tnum">${(sum('totalCost')-sum('tcs'))>0?Math.round(sum('revenue')/(sum('totalCost')-sum('tcs'))*100):0}%</td>
+    <td class="num tnum">${fmt(sum('dmc'))}</td>
+    <td colspan="2"></td>
+  </tr>`;
+  lucide.createIcons();
+}
+function setVal(i,k,v){DATA[i][k]=v;DATA[i]=derive(DATA[i]);renderRegister();}
+
+/* ---------------- filter UI ---------------- */
+function buildFilters(){
+  const counts={all:DATA.length,PAID:0,PARTIAL:0,UNPAID:0};
+  DATA.forEach(b=>counts[b.status]++);
+  const chips=[["all","All"],["UNPAID","Unpaid"],["PARTIAL","Partial"],["PAID","Fully Paid"]];
+  document.getElementById("statusChips").innerHTML=chips.map(([id,l])=>
+    `<button class="chip ${fStatus===id?'active':''}" onclick="fStatus='${id}';buildFilters();renderRegister()">${l}<span class="ct tnum">${counts[id]}</span></button>`).join("");
+  const months=["all",...new Set(DATA.map(b=>monthOf(b.entry)))];
+  document.getElementById("monthFilter").innerHTML=months.map(m=>`<option value="${m}" ${fMonth===m?'selected':''}>${m==="all"?"All entry months":m}</option>`).join("");
+  const reps=["all",...new Set(DATA.map(b=>b.rep))];
+  document.getElementById("repFilter").innerHTML=reps.map(r=>`<option value="${r}" ${fRep===r?'selected':''}>${r==="all"?"All reps":r}</option>`).join("");
+}
+document.getElementById("monthFilter").addEventListener("change",e=>{fMonth=e.target.value;renderRegister();});
+document.getElementById("repFilter").addEventListener("change",e=>{fRep=e.target.value;renderRegister();});
+document.getElementById("topSearch").addEventListener("input",e=>{fSearch=e.target.value;renderRegister();});
+
+/* ---------------- reports ---------------- */
+const REPORTS=[
+  {id:"monthly",label:"Monthly",key:b=>monthOf(b.entry),col:"Month"},
+  {id:"weekly",label:"Weekly",key:b=>weekOf(b.entry),col:"Week"},
+  {id:"daily",label:"Daily",key:b=>dmy(b.entry),col:"Day"},
+  {id:"rep",label:"Person-wise (Rep)",key:b=>b.rep,col:"Sales Rep"},
+  {id:"tl",label:"Team Lead",key:b=>b.tl,col:"Team Lead"},
+  {id:"dest",label:"Destination",key:b=>b.dest,col:"Destination"},
+  {id:"status",label:"Status",key:b=>b.status,col:"Status"},
+  {id:"type",label:"Type",key:b=>b.type,col:"Type"},
+];
+let curReport="monthly";
+function buildReportChips(){
+  document.getElementById("reportChips").innerHTML=REPORTS.map(r=>
+    `<button class="chip ${curReport===r.id?'active':''}" onclick="curReport='${r.id}';renderReports()">${r.label}</button>`).join("");
+}
+function renderReports(){
+  buildReportChips();
+  const rep=REPORTS.find(r=>r.id===curReport);
+  const groups={};
+  DATA.forEach(b=>{const k=rep.key(b);(groups[k]=groups[k]||[]).push(b);});
+  const sum=(arr,k)=>arr.reduce((s,b)=>s+(+b[k]||0),0);
+  const rows=Object.entries(groups).map(([k,arr])=>({
+    k,n:arr.length,incgst:sum(arr,'incgst'),received:sum(arr,'received'),balance:sum(arr,'balance'),
+    gst5:sum(arr,'gst5'),tcs:sum(arr,'tcs'),agentFees:sum(arr,'agentFees'),dmc:sum(arr,'dmc'),revenue:sum(arr,'revenue')
+  })).sort((a,b)=>b.incgst-a.incgst);
+
+  // KPI cards (overall)
+  const T={n:DATA.length,incgst:sum(DATA,'incgst'),received:sum(DATA,'received'),balance:sum(DATA,'balance'),revenue:sum(DATA,'revenue'),gst5:sum(DATA,'gst5'),tcs:sum(DATA,'tcs'),dmc:sum(DATA,'dmc')};
+  document.getElementById("repMetrics").innerHTML=`
+    ${metric('primary','layers','Total Sales (Inc GST)',fmt(T.incgst),T.n+' bookings')}
+    ${metric('green','trending-up','Total Collected',fmt(T.received),Math.round(T.received/T.incgst*100)+'% of sales')}
+    ${metric('red','hourglass','Outstanding Balance',fmt(T.balance),'to be collected')}
+    ${metric('primary','badge-indian-rupee','Net Revenue',fmt(T.revenue),'after DMC + agent fees')}
+    ${metric('amber','receipt','GST Collected @5%',fmt(T.gst5),'payable to govt')}
+    ${metric('amber','percent','TCS Collected',fmt(T.tcs),'tax collected at source')}
+    ${metric('green','plane','DMC Cost',fmt(T.dmc),'supplier payouts')}
+    ${metric('primary','wallet','Avg Booking Value',fmt(T.incgst/Math.max(1,T.n)),'per booking')}`;
+
+  document.getElementById("repHead").innerHTML=`<tr>
+    <th>${rep.col}</th><th class="num">Bookings</th><th class="num">Sales Inc GST</th><th class="num">Collected</th><th class="num">Balance</th>
+    <th class="num">GST @5%</th><th class="num">TCS</th><th class="num">Agent Fees</th><th class="num">DMC</th><th class="num">Revenue</th></tr>`;
+  document.getElementById("repBody").innerHTML=rows.map(r=>`<tr>
+    <td class="cell-primary">${r.k}</td>
+    <td class="num tnum">${r.n}</td>
+    <td class="num tnum">${fmt(r.incgst)}</td>
+    <td class="num tnum amount-green">${fmt(r.received)}</td>
+    <td class="num tnum"><span class="${r.balance>0?'amount-red':''}">${fmt(r.balance)}</span></td>
+    <td class="num tnum">${fmt(r.gst5)}</td>
+    <td class="num tnum">${fmt(r.tcs)}</td>
+    <td class="num tnum">${fmt(r.agentFees)}</td>
+    <td class="num tnum">${fmt(r.dmc)}</td>
+    <td class="num tnum"><b style="color:var(--primary-700)">${fmt(r.revenue)}</b></td></tr>`).join("");
+  document.getElementById("repFoot").innerHTML=`<tr>
+    <td>TOTAL</td><td class="num tnum">${T.n}</td><td class="num tnum">${fmt(T.incgst)}</td><td class="num tnum">${fmt(T.received)}</td>
+    <td class="num tnum">${fmt(T.balance)}</td><td class="num tnum">${fmt(T.gst5)}</td><td class="num tnum">${fmt(T.tcs)}</td>
+    <td class="num tnum">${fmt(sum(DATA,'agentFees'))}</td><td class="num tnum">${fmt(T.dmc)}</td><td class="num tnum">${fmt(T.revenue)}</td></tr>`;
+  lucide.createIcons();
+}
+function metric(accent,icon,label,value,foot){
+  const c={primary:['var(--primary)','var(--primary-tint)'],green:['var(--green)','var(--green-bg)'],amber:['var(--amber)','var(--amber-bg)'],red:['var(--red)','var(--red-bg)']}[accent];
+  return `<div class="metric" style="--accent:${c[0]};--accent-bg:${c[1]}">
+    <div class="metric-top"><div class="metric-ico"><i data-lucide="${icon}"></i></div><div class="metric-label">${label}</div></div>
+    <div class="metric-value tnum">${value}</div><div class="metric-foot">${foot}</div></div>`;
+}
+
+/* ---------------- view switch + export ---------------- */
+function showView(v){
+  ["register","reports","analytics","rollout"].forEach(x=>document.getElementById("view-"+x).classList.toggle("hidden",v!==x));
+  document.getElementById("tab-reg").classList.toggle("active",v==="register");
+  document.getElementById("tab-rep").classList.toggle("active",v==="reports");
+  document.getElementById("tab-an").classList.toggle("active",v==="analytics");
+  document.getElementById("tab-roll").classList.toggle("active",v==="rollout");
+  if(v==="reports") renderReports();
+  if(v==="analytics") renderAnalytics();
+  lucide.createIcons();
+}
+
+/* ---------------- ANALYTICS ---------------- */
+let anMetric="revenue";
+const AN_METRICS=[{id:"revenue",label:"Net Revenue"},{id:"sales",label:"Sales (Inc GST)"},{id:"collected",label:"Collected"},{id:"n",label:"Bookings"}];
+function aSum(arr,k){return arr.reduce((s,b)=>s+(+b[k]||0),0);}
+function lsq(ys){const n=ys.length;let sx=0,sy=0,sxy=0,sxx=0;ys.forEach((y,x)=>{sx+=x;sy+=y;sxy+=x*y;sxx+=x*x;});const d=n*sxx-sx*sx||1;const slope=(n*sxy-sx*sy)/d;const it=(sy-slope*sx)/n;return{slope,at:x=>slope*x+it};}
+function monthly(){
+  const map={};MONTHS_SEQ.forEach(mo=>map[mo.key]={key:mo.key,sales:0,netSales:0,dmc:0,agentFees:0,revenue:0,collected:0,gst:0,tcs:0,outstanding:0,n:0});
+  DATA.forEach(b=>{const m=map[monthOf(b.entry)];if(!m)return;m.sales+=b.incgst;m.netSales+=b.totalCost;m.dmc+=b.dmc;m.agentFees+=b.agentFees;m.revenue+=b.revenue;m.collected+=b.received;m.gst+=b.gst5;m.tcs+=b.tcs;m.outstanding+=b.balance;m.n++;});
+  return MONTHS_SEQ.map(mo=>map[mo.key]);
+}
+function svgBars(vals,labels,opts){opts=opts||{};const W=720,H=240,padB=26,padL=6,padR=6;const all=opts.forecast!=null?vals.concat([opts.forecast]):vals.slice();const max=Math.max(1,...all);const n=all.length;const step=(W-padL-padR)/n;const bw=step*0.58;let s="";
+  for(let g=1;g<=3;g++){const y=18+(H-18-padB)*(g/3);const val=max*(1-g/3);s+=`<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="#EAEFEB"/><text x="2" y="${y-3}" font-size="9" fill="#B7C1BA">${opts.fmtY?opts.fmtY(val):Math.round(val)}</text>`;}
+  all.forEach((v,i)=>{const x=padL+i*step+(step-bw)/2;const h=Math.max(0,(H-18-padB)*(v/max));const y=H-padB-h;const fore=opts.forecast!=null&&i===all.length-1;
+    s+=`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="4" ${fore?'fill="#0F8A5F" fill-opacity="0.22" stroke="#0F8A5F" stroke-dasharray="4 3"':'fill="'+(opts.color||"#0F8A5F")+'"'}></rect>`;
+    s+=`<text x="${x+bw/2}" y="${H-9}" font-size="8.5" text-anchor="middle" fill="${fore?'#0F8A5F':'#8A968F'}" ${fore?'font-weight="700"':''}>${fore?(opts.forecastLabel||"Next"):labels[i]}</text>`;});
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block">${s}</svg>`;
+}
+function svgDonut(parts){const total=parts.reduce((s,p)=>s+p.value,0)||1;let a=-Math.PI/2;const cx=80,cy=80,r=64,ri2=42;let s="";
+  parts.forEach(p=>{const f=p.value/total||0;const a2=a+f*2*Math.PI;const x1=cx+r*Math.cos(a),y1=cy+r*Math.sin(a),x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2),xi2=cx+ri2*Math.cos(a2),yi2=cy+ri2*Math.sin(a2),xi1=cx+ri2*Math.cos(a),yi1=cy+ri2*Math.sin(a),lg=f>0.5?1:0;s+=`<path d="M${x1} ${y1} A${r} ${r} 0 ${lg} 1 ${x2} ${y2} L${xi2} ${yi2} A${ri2} ${ri2} 0 ${lg} 0 ${xi1} ${yi1} Z" fill="${p.color}"/>`;a=a2;});
+  return `<svg viewBox="0 0 160 160" width="150" height="150">${s}</svg>`;
+}
+function cmpCard(label,cur,prev,money){const diff=prev?((cur-prev)/prev*100):(cur>0?100:0);const cls=Math.abs(diff)<0.5?'flat':(diff>=0?'up':'down');const ic=cls==='flat'?'minus':(diff>=0?'arrow-up-right':'arrow-down-right');
+  return `<div class="cmp"><div class="l">${label}</div><div class="v tnum">${money?fmt(cur):Math.round(cur)}</div>
+    <div class="d ${cls}"><i data-lucide="${ic}"></i>${diff>=0?'+':''}${diff.toFixed(1)}%</div>
+    <div class="prev">was ${money?fmt(prev):Math.round(prev)} prior</div></div>`;
+}
+function renderAnalytics(){
+  const ser=monthly(), cur=ser[11], prev=ser[10];
+  const T={sales:aSum(DATA,'incgst'),gst:aSum(DATA,'gst5'),netSales:aSum(DATA,'totalCost'),dmc:aSum(DATA,'dmc'),agentFees:aSum(DATA,'agentFees'),revenue:aSum(DATA,'revenue'),tcs:aSum(DATA,'tcs'),collected:aSum(DATA,'received'),outstanding:aSum(DATA,'balance')};
+  const margin=(T.netSales-T.tcs)>0?Math.round(T.revenue/(T.netSales-T.tcs)*100):0;
+
+  // KPIs
+  document.getElementById("anKpis").innerHTML=
+    metric('primary','badge-indian-rupee','Net Revenue',fmt(T.revenue),margin+'% net margin')+
+    metric('green','trending-up','Total Sales (Inc GST)',fmt(T.sales),DATA.length+' bookings')+
+    metric('green','circle-check-big','Total Collected',fmt(T.collected),Math.round(T.collected/T.sales*100)+'% of sales')+
+    metric('red','hourglass','Outstanding',fmt(T.outstanding),'to be collected')+
+    metric('amber','receipt','GST Payable @5%',fmt(T.gst),'to government')+
+    metric('amber','percent','TCS Collected',fmt(T.tcs),'tax at source')+
+    metric('primary','plane','DMC / Supplier Cost',fmt(T.dmc),'cost of sales')+
+    metric('primary','wallet','Avg Booking Value',fmt(T.sales/Math.max(1,DATA.length)),'per booking');
+
+  // chart
+  document.getElementById("anMetricChips").innerHTML=AN_METRICS.map(m=>`<button class="${anMetric===m.id?'on':''}" onclick="anMetric='${m.id}';renderAnalytics()">${m.label}</button>`).join("");
+  const vals=ser.map(s=>s[anMetric]); const fit=lsq(vals); const next=Math.max(0,fit.at(12));
+  const labels=MONTHS_SEQ.map(mo=>MONTHS[mo.m]);
+  const money=anMetric!=="n";
+  document.getElementById("anChart").innerHTML=svgBars(vals,labels,{forecast:next,color:anMetric==='collected'?'#15803D':'#0F8A5F',fmtY:v=>money?('₹'+Math.round(v/1000)+'k'):Math.round(v)});
+  // forecast (always revenue-based for the callouts)
+  const rys=ser.map(s=>s.revenue); const rf=lsq(rys); const rNext=Math.max(0,rf.at(12)); const rQ=Math.max(0,rf.at(12)+rf.at(13)+rf.at(14));
+  const avg=rys.reduce((a,b)=>a+b,0)/rys.length; const growth=avg?rf.slope/avg*100:0;
+  document.getElementById("anForecast").innerHTML=
+    `<div class="fc"><div class="l">Next month revenue</div><div class="v tnum">${fmt(rNext)}</div><div class="s">projected (linear trend)</div></div>
+     <div class="fc"><div class="l">Next quarter</div><div class="v tnum">${fmt(rQ)}</div><div class="s">3-month projection</div></div>
+     <div class="fc"><div class="l">Trend</div><div class="v tnum">${growth>=0?'+':''}${growth.toFixed(1)}%</div><div class="s">avg change / month</div></div>`;
+
+  // P&L
+  const grossProfit=T.netSales-T.dmc; const pc=v=>T.netSales?Math.round(v/T.netSales*100)+'%':'—';
+  const plRow=(l,a,opt={})=>`<div class="pl-row ${opt.cls||''} ${opt.neg?'pl-neg':''}"><span class="lbl">${l}</span><span class="pc">${opt.pc||''}</span><span class="amt tnum">${opt.neg?'(':''}${fmt(a)}${opt.neg?')':''}</span></div>`;
+  document.getElementById("anPL").innerHTML=
+    plRow('Gross Sales (Inc GST)',T.sales,{pc:pc(T.sales)})+
+    plRow('Less: GST collected @5%',T.gst,{neg:true,pc:pc(T.gst)})+
+    plRow('Net Sales (excl GST)',T.netSales,{cls:'sub',pc:'100%'})+
+    plRow('Less: DMC / supplier cost',T.dmc,{neg:true,pc:pc(T.dmc)})+
+    plRow('Gross Profit',grossProfit,{cls:'sub',pc:pc(grossProfit)})+
+    plRow('Less: Agent fees / commission',T.agentFees,{neg:true,pc:pc(T.agentFees)})+
+    plRow('Net Revenue (operating profit)',T.revenue,{cls:'total',pc:pc(T.revenue)})+
+    `<div style="font-size:11.5px;color:var(--fg3);margin-top:10px;display:flex;align-items:center;gap:6px"><i data-lucide="info" style="width:13px;height:13px"></i>TCS ${fmt(T.tcs)} is collected from clients and paid to govt — a liability, not income.</div>`;
+
+  // MoM + Half
+  document.getElementById("anMomSub").textContent=cur.key+" vs "+prev.key;
+  document.getElementById("anMoM").innerHTML=
+    cmpCard('Net Revenue',cur.revenue,prev.revenue,true)+cmpCard('Sales (Inc GST)',cur.sales,prev.sales,true)+cmpCard('Collected',cur.collected,prev.collected,true)+cmpCard('Bookings',cur.n,prev.n,false);
+  const last6=ser.slice(6),prior6=ser.slice(0,6); const S=(a,k)=>a.reduce((s,m)=>s+m[k],0);
+  document.getElementById("anHalfSub").textContent=last6[0].key+"–"+last6[5].key+" vs "+prior6[0].key+"–"+prior6[5].key;
+  document.getElementById("anHalf").innerHTML=
+    cmpCard('Net Revenue',S(last6,'revenue'),S(prior6,'revenue'),true)+cmpCard('Sales (Inc GST)',S(last6,'sales'),S(prior6,'sales'),true)+cmpCard('Collected',S(last6,'collected'),S(prior6,'collected'),true)+cmpCard('Bookings',S(last6,'n'),S(prior6,'n'),false);
+
+  // profit by destination
+  const dmap={};DATA.forEach(b=>{const g=dmap[b.dest]=dmap[b.dest]||{n:0,sales:0,net:0,dmc:0,tcs:0,rev:0};g.n++;g.sales+=b.incgst;g.net+=b.totalCost;g.dmc+=b.dmc;g.tcs+=b.tcs;g.rev+=b.revenue;});
+  const drows=Object.entries(dmap).map(([d,g])=>({d,...g,m:(g.net-g.tcs)>0?Math.round(g.rev/(g.net-g.tcs)*100):0})).sort((a,b)=>b.rev-a.rev);
+  document.getElementById("anDest").innerHTML=`<thead><tr><th>Destination</th><th class="num">Trips</th><th class="num">Sales</th><th class="num">DMC</th><th class="num">Revenue</th><th class="num">Margin</th></tr></thead><tbody>`+
+    drows.map(r=>`<tr><td style="font-weight:700">${r.d}</td><td class="num tnum">${r.n}</td><td class="num tnum">${fmt(r.sales)}</td><td class="num tnum">${fmt(r.dmc)}</td><td class="num tnum" style="color:var(--primary-700);font-weight:700">${fmt(r.rev)}</td><td class="num tnum">${r.m}%</td></tr>`).join("")+`</tbody>`;
+
+  // type donut
+  const intl=aSum(DATA.filter(b=>b.type==='International'),'revenue'), dom=aSum(DATA.filter(b=>b.type==='Domestic'),'revenue');
+  document.getElementById("anType").innerHTML=svgDonut([{value:intl,color:'#0F8A5F'},{value:dom,color:'#6D28D9'}])+
+    `<div class="legend-row"><span><i class="sw2" style="background:#0F8A5F"></i>International ${fmt(intl)}</span><span><i class="sw2" style="background:#6D28D9"></i>Domestic ${fmt(dom)}</span></div>`;
+
+  // top reps
+  const rmap={};DATA.forEach(b=>{rmap[b.rep]=(rmap[b.rep]||0)+b.revenue;});
+  const reps=Object.entries(rmap).map(([r,v])=>({r,v})).sort((a,b)=>b.v-a.v).slice(0,5);const rmax=Math.max(1,...reps.map(x=>x.v));
+  document.getElementById("anReps").innerHTML=reps.map(x=>`<div class="hbar"><span class="nm">${x.r}</span><span class="track"><span class="fill" style="width:${x.v/rmax*100}%"></span></span><span class="vv tnum">${fmt(x.v)}</span></div>`).join("");
+
+  // receivables aging
+  let overdue=0,soon=0,up=0;
+  DATA.forEach(b=>{if(b.balance<=0)return;const due=new Date(b.checkin);due.setDate(due.getDate()-7);const days=Math.round((due-CURRENT)/86400000);if(days<0)overdue+=b.balance;else if(days<=7)soon+=b.balance;else up+=b.balance;});
+  const amax=Math.max(1,overdue,soon,up);
+  const ageBar=(l,v,c)=>`<div class="hbar"><span class="nm">${l}</span><span class="track"><span class="fill" style="width:${v/amax*100}%;background:${c}"></span></span><span class="vv tnum">${fmt(v)}</span></div>`;
+  document.getElementById("anAging").innerHTML=ageBar('Overdue',overdue,'#C81E1E')+ageBar('Due ≤ 7 days',soon,'#B45309')+ageBar('Upcoming',up,'#0E7490');
+
+  // cash & liabilities
+  const agentPending=DATA.reduce((s,b)=>s+Math.max(0,b.balance2),0);
+  document.getElementById("anCashL").innerHTML=
+    `<div class="kv2"><span class="k"><i data-lucide="arrow-down-to-line"></i>Collected (received)</span><span class="v tnum" style="color:var(--green)">${fmt(T.collected)}</span></div>
+     <div class="kv2"><span class="k"><i data-lucide="hourglass"></i>Outstanding receivable</span><span class="v tnum" style="color:var(--red)">${fmt(T.outstanding)}</span></div>
+     <div class="kv2"><span class="k"><i data-lucide="plane"></i>DMC committed (cost)</span><span class="v tnum">${fmt(T.dmc)}</span></div>`;
+  document.getElementById("anCashR").innerHTML=
+    `<div class="kv2"><span class="k"><i data-lucide="receipt"></i>GST payable to govt</span><span class="v tnum">${fmt(T.gst)}</span></div>
+     <div class="kv2"><span class="k"><i data-lucide="percent"></i>TCS payable to govt</span><span class="v tnum">${fmt(T.tcs)}</span></div>
+     <div class="kv2"><span class="k"><i data-lucide="handshake"></i>Agent payouts pending</span><span class="v tnum">${fmt(agentPending)}</span></div>`;
+
+  lucide.createIcons();
+}
+
+/* ---------------- focused entry drawer ---------------- */
+let edIndex=-1;
+const AVAILABLE=[
+  {label:"Meera Banerjee — Goa (OBT-24210)", b:{status:"PARTIAL",entry:"2026-05-29",tl:"Arjun Mehta",rep:"Rahul Nair",cust:"Meera Banerjee",mob:"+91 99001 00002",members:2,dest:"Goa",pkg:"Goa Getaway",checkin:"2026-07-10",checkout:"2026-07-13",incgst:62000,received:20000,type:"Domestic",inv:"",city:"",agentGst:0,paid:0,tcs:0,dmc:38000,r1:"",r2:""}},
+  {label:"Sanjay Gupta — Bali (OBT-24205)", b:{status:"UNPAID",entry:"2026-05-29",tl:"Arjun Mehta",rep:"Sneha Iyer",cust:"Sanjay Gupta",mob:"+91 99001 00003",members:3,dest:"Bali",pkg:"Bali Explorer",checkin:"2026-08-02",checkout:"2026-08-08",incgst:205000,received:0,type:"International",inv:"",city:"",agentGst:0,paid:0,tcs:0,dmc:132000,r1:"",r2:""}},
+  {label:"Vivek Reddy — Manali (OBT-24202)", b:{status:"PARTIAL",entry:"2026-05-29",tl:"Arjun Mehta",rep:"Priya Sharma",cust:"Vivek Reddy",mob:"+91 99001 00005",members:5,dest:"Manali",pkg:"Manali Snow",checkin:"2026-07-18",checkout:"2026-07-22",incgst:96000,received:30000,type:"Domestic",inv:"",city:"",agentGst:0,paid:0,tcs:0,dmc:60000,r1:"",r2:""}},
+];
+function kv(k,v){return `<div><div class="k">${k}</div><div class="v tnum">${v}</div></div>`;}
+function openEntry(i){
+  edIndex=i; const b=DATA[i];
+  document.getElementById("edHead").innerHTML=
+    `<div><div class="ed-title">${b.cust}</div><div class="ed-sub">${b.dest} · ${b.pkg} · ${b.members} pax · ${statusPill(b.status)}</div></div>
+     <button class="ed-close" onclick="closeEntry()"><i data-lucide="x"></i></button>`;
+  document.getElementById("edBody").innerHTML=
+    `<div class="ed-sec"><i data-lucide="database"></i>From the TMS — auto</div>
+     <div class="kv">
+       ${kv("Rep",b.rep)}${kv("Team Lead",b.tl)}
+       ${kv("Mobile",b.mob)}${kv("Members",b.members)}
+       ${kv("Check-in",dmy(b.checkin))}${kv("Check-out",dmy(b.checkout))}
+       ${kv("Total Inc GST",fmt(b.incgst))}${kv("Received",fmt(b.received))}
+     </div>
+     <div class="ed-sec"><i data-lucide="pencil"></i>Finance entry</div>
+     <div class="erow">
+       <div class="efield"><label>Type</label><select id="e_type">${["Domestic","International"].map(t=>`<option ${b.type===t?'selected':''}>${t}</option>`).join('')}</select></div>
+       <div class="efield"><label>GST Invoice No</label><input id="e_inv" value="${b.inv||''}" placeholder="INV-…"></div>
+     </div>
+     <div class="efield"><label>City</label><input id="e_city" value="${b.city||''}" placeholder="Customer city"></div>
+     <div class="erow">
+       <div class="efield"><label>Agent Fees (incl GST)</label><input id="e_agentGst" type="number" value="${b.agentGst||0}" oninput="updateCalc()"></div>
+       <div class="efield"><label>Amount Paid to Agent</label><input id="e_paid" type="number" value="${b.paid||0}" oninput="updateCalc()"></div>
+     </div>
+     <div class="erow">
+       <div class="efield"><label>TCS</label><input id="e_tcs" type="number" value="${b.tcs||0}" oninput="updateCalc()"></div>
+       <div class="efield"><label>DMC Cost</label><input id="e_dmc" type="number" value="${b.dmc||0}" oninput="updateCalc()"></div>
+     </div>
+     <div class="efield"><label>Remarks 1</label><input id="e_r1" value="${b.r1||''}"></div>
+     <div class="efield"><label>Remarks 2</label><input id="e_r2" value="${b.r2||''}"></div>
+     <div class="ed-sec"><i data-lucide="calculator"></i>Auto-calculated</div>
+     <div class="calc-box" id="edCalc"></div>
+     <button class="btn btn-primary" style="width:100%;margin-top:16px" onclick="saveEntry()"><i data-lucide="check"></i>Save entry</button>`;
+  updateCalc();
+  document.getElementById("edScrim").classList.add("open");
+  document.getElementById("edDrawer").classList.add("open");
+  lucide.createIcons();
+}
+function updateCalc(){
+  const b=DATA[edIndex];
+  const agentGst=+document.getElementById("e_agentGst").value||0, paid=+document.getElementById("e_paid").value||0, dmc=+document.getElementById("e_dmc").value||0, tcs=+document.getElementById("e_tcs").value||0;
+  const totalCost=b.incgst/1.05, gst5=b.incgst-totalCost, balance=b.incgst-b.received, advPct=b.incgst>0?Math.round(b.received/b.incgst*100):0;
+  const agentFees=agentGst/1.05, balance2=agentGst-paid, revenue=totalCost-dmc-agentFees;
+  const revBase=totalCost-tcs, revPct=revBase>0?Math.round(revenue/revBase*100):0;
+  document.getElementById("edCalc").innerHTML=
+    `<div class="calc-row"><span>Total Cost (excl GST)</span><span class="cv tnum">${fmt(totalCost)}</span></div>
+     <div class="calc-row"><span>GST @ 5%</span><span class="cv tnum">${fmt(gst5)}</span></div>
+     <div class="calc-row"><span>TCS @ 2%</span><span class="cv tnum">${fmt(tcs)}</span></div>
+     <div class="calc-row"><span>Advance collected</span><span class="cv tnum">${advPct}%</span></div>
+     <div class="calc-row"><span>Balance from customer</span><span class="cv tnum">${fmt(balance)}</span></div>
+     <div class="calc-row"><span>Agent Fees (excl GST)</span><span class="cv tnum">${fmt(agentFees)}</span></div>
+     <div class="calc-row"><span>Agent balance (Balance 2)</span><span class="cv tnum">${fmt(balance2)}</span></div>
+     <div class="calc-row big"><span>Net Revenue</span><span class="cv tnum">${fmt(revenue)}</span></div>
+     <div class="calc-row big"><span>Revenue %</span><span class="cv tnum">${revPct}%</span></div>`;
+}
+function saveEntry(){
+  const b=DATA[edIndex];
+  b.type=document.getElementById("e_type").value;
+  b.inv=document.getElementById("e_inv").value;
+  b.city=document.getElementById("e_city").value;
+  b.agentGst=+document.getElementById("e_agentGst").value||0;
+  b.paid=+document.getElementById("e_paid").value||0;
+  b.tcs=+document.getElementById("e_tcs").value||0;
+  b.dmc=+document.getElementById("e_dmc").value||0;
+  b.r1=document.getElementById("e_r1").value;
+  b.r2=document.getElementById("e_r2").value;
+  DATA[edIndex]=derive(b);
+  buildFilters();renderRegister();closeEntry();
+}
+function closeEntry(){document.getElementById("edScrim").classList.remove("open");document.getElementById("edDrawer").classList.remove("open");}
+function openAdd(){
+  document.getElementById("edHead").innerHTML=
+    `<div><div class="ed-title">Add a booking to Finance</div><div class="ed-sub">Pick a confirmed TMS booking — its details auto-fill</div></div>
+     <button class="ed-close" onclick="closeEntry()"><i data-lucide="x"></i></button>`;
+  document.getElementById("edBody").innerHTML=
+    `<div class="ed-sec"><i data-lucide="database"></i>Select a TMS booking</div>
+     <div class="efield"><label>Confirmed bookings not yet in the register</label>
+       <select id="e_pick"><option value="-1">Choose a booking…</option>${AVAILABLE.map((a,i)=>`<option value="${i}">${a.label}</option>`).join('')}</select></div>
+     <div style="font-size:12.5px;color:var(--fg2);line-height:1.5">Selecting a booking pulls in the customer, rep, dates, destination and amounts automatically — then you only add the finance fields. This is how every new booking flows in (Phase 3 does it without a click).</div>`;
+  document.getElementById("e_pick").addEventListener("change",e=>{const i=+e.target.value;if(i<0)return;DATA.push(derive({...AVAILABLE[i].b}));openEntry(DATA.length-1);});
+  document.getElementById("edScrim").classList.add("open");
+  document.getElementById("edDrawer").classList.add("open");
+  lucide.createIcons();
+}
+function exportCSV(){
+  const cols=["Sl","Status","Month","Type","Entry Date","GST Inv No","Team Lead","Rep","Customer","Mobile","City","Members","Travel Month","Check-in","Check-out","Destination","Package","Total Inc GST","Total Cost","Received","Adv %","Balance","Agent Fees +GST","Agent Fees","Amt Paid","Balance 2","GST @5%","TCS @2%","Revenue","Rev %","DMC","Remarks 1","Remarks 2"];
+  const rows=filtered().map((b,i)=>[i+1,b.status,monthOf(b.entry),b.type,b.entry,b.inv,b.tl,b.rep,b.cust,b.mob,b.city,b.members,monthOf(b.checkin),b.checkin,b.checkout,b.dest,b.pkg,b.incgst,Math.round(b.totalCost),b.received,b.advPct+"%",b.balance,b.agentGst,Math.round(b.agentFees),b.paid,b.balance2,Math.round(b.gst5),b.tcs,Math.round(b.revenue),b.revenuePct+"%",b.dmc,b.r1,b.r2]);
+  downloadCSV([cols,...rows],"finance-register.csv");
+}
+function exportReportCSV(){
+  const rep=REPORTS.find(r=>r.id===curReport);const groups={};DATA.forEach(b=>{const k=rep.key(b);(groups[k]=groups[k]||[]).push(b);});
+  const sum=(arr,k)=>arr.reduce((s,b)=>s+(+b[k]||0),0);
+  const head=[rep.col,"Bookings","Sales Inc GST","Collected","Balance","GST 5%","TCS","Agent Fees","DMC","Revenue"];
+  const rows=Object.entries(groups).map(([k,arr])=>[k,arr.length,sum(arr,'incgst'),sum(arr,'received'),sum(arr,'balance'),Math.round(sum(arr,'gst5')),sum(arr,'tcs'),Math.round(sum(arr,'agentFees')),sum(arr,'dmc'),Math.round(sum(arr,'revenue'))]);
+  downloadCSV([head,...rows],"finance-report-"+rep.id+".csv");
+}
+function downloadCSV(arr,name){
+  const csv=arr.map(r=>r.map(c=>`"${String(c??"").replace(/"/g,'""')}"`).join(",")).join("\n");
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download=name;a.click();
+}
+
+/* ---------------- init ---------------- */
+buildFilters();renderRegister();buildReportChips();
+lucide.createIcons();
+</script>
+</body>
+</html>

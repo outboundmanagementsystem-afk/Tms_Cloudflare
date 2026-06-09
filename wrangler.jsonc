@@ -1,0 +1,32 @@
+{
+  "name": "outbound-itinerary-generator",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2024-09-23",
+  "compatibility_flags": ["nodejs_compat"],
+
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "outbound-tms",
+      "database_id": "04ea0c80-b86b-4fca-8a79-a2d580dd826b",
+      "remote": true
+    }
+  ],
+
+  "r2_buckets": [
+    {
+      "binding": "FILES",
+      "bucket_name": "outbound-files",
+      "remote": true
+    }
+  ],
+
+  "vars": {
+    "NEXT_PUBLIC_APP_URL": "http://localhost:8788"
+  }
+}
